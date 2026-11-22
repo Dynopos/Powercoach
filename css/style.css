@@ -384,3 +384,49 @@ p{margin:0}
 }
 @media (max-width:559px){.spk .gal__item:not(.spk--1) figcaption{display:none}}
 @media (min-width:1024px){.spk{grid-auto-rows:164px}.spk .gal__item{aspect-ratio:auto}}
+
+/* Album program */
+.alb-filter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chipbtn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);font-size:14px;font-weight:600;color:#d6d1e1;transition:background .2s,border-color .2s,color .2s}
+.chipbtn span{font-size:12px;padding:1px 7px;border-radius:999px;background:rgba(255,255,255,.08);color:var(--muted)}
+.chipbtn:hover{border-color:var(--line-hi)}
+.chipbtn.is-on{background:var(--g-brand);border-color:transparent;color:#fff}
+.chipbtn.is-on span{background:rgba(0,0,0,.2);color:#fff}
+.alb{columns:2;column-gap:12px}
+.alb__item{position:relative;margin:0 0 12px;break-inside:avoid;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--line);background:var(--ink-800);animation:pop .4s var(--ease)}
+.alb__item .gal__btn{position:relative;display:block}
+.alb__item img{width:100%;height:auto;transition:transform .8s var(--ease)}
+.alb__item:hover img{transform:scale(1.05)}
+.alb__item::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(9,7,16,.85),transparent 45%);opacity:0;transition:opacity .3s}
+.alb__item figcaption{position:absolute;z-index:1;left:12px;right:12px;bottom:10px;pointer-events:none;font-size:13px;font-weight:600;color:#fff;line-height:1.35;opacity:0;transform:translateY(6px);transition:.3s var(--ease)}
+.alb__item:hover::after,.alb__item:hover figcaption,.alb__item:focus-within::after,.alb__item:focus-within figcaption{opacity:1;transform:none}
+.alb:not(.is-all) .alb__item[data-more]{display:none}
+.alb__item.is-out{display:none!important}
+.alb-more{display:flex;justify-content:center;margin-top:6px}
+@media (hover:none){.alb__item::after,.alb__item figcaption{opacity:1;transform:none}}
+@media (max-width:559px){.alb__item figcaption{display:none}.chipbtn{min-height:36px;padding:6px 12px;font-size:13px}}
+@media (min-width:700px){.alb{columns:3}}
+@media (min-width:1024px){.alb{columns:4}}
+
+/* Video: susun atur 7 klip */
+.vid--big{grid-column:1/-1}
+@media (min-width:1024px){
+  .vids{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .vid--big{grid-column:1/3;grid-row:span 2;aspect-ratio:auto}
+  .vid--wide{grid-column:span 2}
+}
+
+/* Testimoni */
+.testi{display:grid;gap:28px;grid-template-columns:minmax(0,1fr);align-items:center}
+.testi__vid{display:flex;justify-content:center}
+.vid--tall{aspect-ratio:9/16;width:min(320px,100%);border-radius:28px;box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 0 6px rgba(255,255,255,.04)}
+.vid--tall .vid__play{width:52px;height:52px;right:50%;bottom:50%;transform:translate(50%,50%)}
+.vid--tall:hover .vid__play{transform:translate(50%,50%) scale(1.1)}
+.vid--tall .vid__play svg{width:22px;height:22px}
+.vid--tall figcaption{right:12px}
+.testi__copy h2{font-size:clamp(28px,4vw,44px);margin-top:12px}
+.testi__q{margin:22px 0 0;padding:20px 22px;border-left:3px solid var(--brand-hi);background:rgba(176,140,255,.07);border-radius:0 16px 16px 0;font-family:var(--f-head);font-size:clamp(22px,2.6vw,28px);color:var(--white);letter-spacing:-.02em;line-height:1.3}
+.testi__q cite{display:block;margin-top:10px;font-family:var(--f-body);font-style:normal;font-size:13px;color:var(--muted);letter-spacing:0}
+.testi__copy > p{color:#c0bbcc;margin-top:18px}
+@media (min-width:900px){.testi{grid-template-columns:5fr 7fr;gap:56px}}
+@media (max-width:559px){.vid--tall figcaption{display:block}}

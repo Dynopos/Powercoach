@@ -88,7 +88,8 @@
   if (lb && typeof lb.showModal === 'function') {
     var stage = lb.querySelector('.lb__stage');
     var cap = lb.querySelector('.lb__cap');
-    var items = Array.prototype.slice.call(document.querySelectorAll('[data-lb],[data-lb-video]'));
+    var all = Array.prototype.slice.call(document.querySelectorAll('[data-lb],[data-lb-video]'));
+    var items = all;
     var idx = 0, opener = null;
     var show = function (i) {
       idx = (i + items.length) % items.length;
@@ -108,11 +109,13 @@
       stage.appendChild(el);
       cap.textContent = it.getAttribute('data-cap') || '';
     };
-    items.forEach(function (it, i) {
+    all.forEach(function (it) {
       it.addEventListener('click', function () {
         opener = it;
+        // hanya item yang sedang kelihatan (ikut penapis album)
+        items = all.filter(function (x) { return x.offsetParent !== null; });
         clips.forEach(function (v) { v.pause(); });
-        show(i); lb.showModal();
+        show(items.indexOf(it)); lb.showModal();
       });
     });
     lb.querySelector('.lb__x').addEventListener('click', function () { lb.close(); });
@@ -136,6 +139,33 @@
       if (!reduce) clips.forEach(function (v) {
         var r = v.getBoundingClientRect();
         if (r.top < innerHeight && r.bottom > 0) tryPlay(v);
+      });
+    });
+  }
+
+  // Album: penapis & lihat semua
+  var alb = document.getElementById('album');
+  var more = document.getElementById('albMore');
+  if (alb && more) {
+    var albItems = alb.querySelectorAll('.alb__item');
+    var chips = document.querySelectorAll('.chipbtn');
+    var setAll = function (on) {
+      alb.classList.toggle('is-all', on);
+      more.setAttribute('aria-expanded', String(on));
+      more.textContent = on ? 'Tunjuk kurang' : 'Lihat semua ' + albItems.length + ' gambar';
+    };
+    more.addEventListener('click', function () {
+      var on = !alb.classList.contains('is-all');
+      setAll(on);
+      if (!on) alb.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+    chips.forEach(function (c) {
+      c.addEventListener('click', function () {
+        var f = c.getAttribute('data-f');
+        chips.forEach(function (o) { var on = o === c; o.classList.toggle('is-on', on); o.setAttribute('aria-pressed', String(on)); });
+        albItems.forEach(function (it) { it.classList.toggle('is-out', f !== 'semua' && it.getAttribute('data-cat') !== f); });
+        if (f === 'semua') { more.parentElement.hidden = false; setAll(false); }
+        else { alb.classList.add('is-all'); more.parentElement.hidden = true; }
       });
     });
   }

@@ -5,7 +5,8 @@ Laman statik (HTML + CSS + JS) — tiada pelayan atau pangkalan data diperlukan.
 ## Kandungan laman
 1. **Hero** — slogan "Gerakkan potensi. Hasilkan tindakan.", foto Afizul Mohammad, statistik (15+ tahun, 10,000+ peserta) dan lencana HRD Corp
 2. **Program** — High-Performance Team Building, Customer Service Excellence, Kesihatan Mental di Tempat Kerja + program tersuai
-3. **Galeri** — 5 gambar & 4 klip video sebenar dari sesi latihan (klik untuk besarkan / main dengan bunyi)
+3. **Galeri** — gambar sesi, gambar jurulatih, 7 klip video dan **Album program** (46 gambar, boleh ditapis: dalam dewan / luar / sesi / kumpulan)
+3b. **Kata peserta** — video testimoni peserta
 4. **Pendekatan** — 3 langkah kerja
 5. **Jurulatih** — profil, pengalaman dan kelayakan Afizul Mohammad
 6. **HRD Corp** — Registered Training Provider & HRD Corp Claimable (dengan penafian syarat)
@@ -49,6 +50,7 @@ Jika guna domain sendiri nanti, cari & ganti `https://dynopos.github.io/Powercoa
 - Letak URL laman dalam Google Business Profile & semua media sosial.
 
 ## Galeri
-- Gambar sesi: `assets/img/sesi-*.webp`; gambar jurulatih: `assets/img/jurulatih-1..5-*.webp` (3 saiz: 640, 1280, 1920). Video: `assets/video/sesi-1..4.mp4` + gambar muka `sesi-*.webp`.
+- Album: `assets/img/album-01..46-(480|1280).webp`. Tambah gambar album: salin satu blok `<figure class="alb__item" data-cat="...">` (kategori: dalam, luar, sesi, kumpulan) dan kemas kini nombor pada butang penapis.
+- Gambar sesi: `assets/img/sesi-*.webp`; gambar jurulatih: `assets/img/jurulatih-1..5-*.webp` (3 saiz: 640, 1280, 1920). Video: `assets/video/sesi-1..8.mp4` (sesi-6 = testimoni) + gambar muka `sesi-*.webp`.
 - Video dimainkan senyap secara automatik bila kelihatan; klik untuk tonton dengan bunyi.
 - Tambah gambar baharu: salin satu blok `<figure class="gal__item ...">` dalam `index.html` dan tukar nama fail & kapsyen.
