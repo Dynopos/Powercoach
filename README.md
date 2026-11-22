@@ -34,9 +34,9 @@ robots.txt, sitemap.xml, llms.txt (untuk Google & enjin AI), 404.html
 - Selepas mengubah CSS/JS, naikkan nombor `?v=1` → `?v=2` dalam `index.html` supaya pelayar tidak guna salinan lama.
 
 ## Alamat laman
-Laman dihoskan di GitHub Pages: https://dynopos.github.io/Powercoach/
-Jika guna domain sendiri nanti, cari & ganti `https://dynopos.github.io/Powercoach/` dengan domain baharu dalam:
-`index.html`, `404.html`, `robots.txt`, `sitemap.xml`, `llms.txt`.
+Laman live di domain sendiri: **https://teambuildingbest.com/** (GitHub Pages + fail `CNAME`).
+Jika domain bertukar, kemas kini `CNAME` dan cari & ganti `https://teambuildingbest.com/` dalam:
+`index.html`, `robots.txt`, `sitemap.xml`, `llms.txt`.
 
 ## Deploy (GitHub Pages)
 1. Repo GitHub → **Settings → Pages**.
