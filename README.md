@@ -78,3 +78,7 @@ Halaman artikel di `artikel/` (senarai: `/artikel/`), juga dipaparkan di laman u
 Setiap artikel ada: tajuk & meta description berkata kunci, breadcrumb, isi kandungan, gambar sebenar program, butang WhatsApp, soalan lazim, artikel berkaitan, gambar kongsi (`og.jpg`) dan data berstruktur `BlogPosting` + `FAQPage` + `BreadcrumbList`.
 Mengedit teks: ubah terus `artikel/<slug>/index.html` (jika ubah soalan lazim, ubah juga bahagian `FAQPage` dalam `<head>`).
 Selepas terbit: hantar `sitemap.xml` semula di Google Search Console.
+
+## Pengindeksan (Google & Bing)
+- Google: Google Search Console → harta `https://teambuildingbest.com/` → hantar `sitemap.xml` → "Request indexing" untuk setiap halaman.
+- Bing / ChatGPT / Copilot: IndexNow aktif — fail kunci `9024183598ad9b5556108d7127cfa05c.txt` di akar laman. Hantar URL baharu ke `https://api.indexnow.org/indexnow` dengan kunci ini.
