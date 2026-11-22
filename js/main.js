@@ -70,6 +70,76 @@
     });
   });
 
+  // Video galeri: main senyap secara automatik bila kelihatan, jeda bila keluar skrin
+  var clips = document.querySelectorAll('.vid video');
+  var tryPlay = function (v) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); };
+  if (!reduce && 'IntersectionObserver' in window) {
+    var vo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var v = en.target;
+        if (en.isIntersecting) { if (v.preload === 'none') v.preload = 'auto'; tryPlay(v); } else { v.pause(); }
+      });
+    }, { threshold: 0.5 });
+    clips.forEach(function (v) { vo.observe(v); });
+  }
+
+  // Lightbox (gambar & video dengan bunyi)
+  var lb = document.getElementById('lb');
+  if (lb && typeof lb.showModal === 'function') {
+    var stage = lb.querySelector('.lb__stage');
+    var cap = lb.querySelector('.lb__cap');
+    var items = Array.prototype.slice.call(document.querySelectorAll('[data-lb],[data-lb-video]'));
+    var idx = 0, opener = null;
+    var show = function (i) {
+      idx = (i + items.length) % items.length;
+      var it = items[idx];
+      stage.innerHTML = '';
+      var el;
+      if (it.hasAttribute('data-lb-video')) {
+        el = document.createElement('video');
+        el.src = it.getAttribute('data-lb-video');
+        el.poster = it.getAttribute('data-poster') || '';
+        el.controls = true; el.playsInline = true; el.autoplay = true;
+      } else {
+        el = document.createElement('img');
+        el.src = it.getAttribute('data-lb');
+        el.alt = (it.querySelector('img') || {}).alt || '';
+      }
+      stage.appendChild(el);
+      cap.textContent = it.getAttribute('data-cap') || '';
+    };
+    items.forEach(function (it, i) {
+      it.addEventListener('click', function () {
+        opener = it;
+        clips.forEach(function (v) { v.pause(); });
+        show(i); lb.showModal();
+      });
+    });
+    lb.querySelector('.lb__x').addEventListener('click', function () { lb.close(); });
+    lb.querySelector('.lb__prev').addEventListener('click', function () { show(idx - 1); });
+    lb.querySelector('.lb__next').addEventListener('click', function () { show(idx + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb || e.target === stage) lb.close(); });
+    lb.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') show(idx - 1);
+      if (e.key === 'ArrowRight') show(idx + 1);
+    });
+    var sx = null;
+    lb.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', function (e) {
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx; sx = null;
+      if (Math.abs(dx) > 50) show(dx < 0 ? idx + 1 : idx - 1);
+    });
+    lb.addEventListener('close', function () {
+      stage.innerHTML = '';
+      if (opener) opener.focus();
+      if (!reduce) clips.forEach(function (v) {
+        var r = v.getBoundingClientRect();
+        if (r.top < innerHeight && r.bottom > 0) tryPlay(v);
+      });
+    });
+  }
+
   // Tahun semasa
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();

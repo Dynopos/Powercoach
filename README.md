@@ -5,12 +5,13 @@ Laman statik (HTML + CSS + JS) — tiada pelayan atau pangkalan data diperlukan.
 ## Kandungan laman
 1. **Hero** — slogan "Gerakkan potensi. Hasilkan tindakan.", foto Afizul Mohammad, statistik (15+ tahun, 10,000+ peserta) dan lencana HRD Corp
 2. **Program** — High-Performance Team Building, Customer Service Excellence, Kesihatan Mental di Tempat Kerja + program tersuai
-3. **Pendekatan** — 3 langkah kerja
-4. **Jurulatih** — profil, pengalaman dan kelayakan Afizul Mohammad
-5. **HRD Corp** — Registered Training Provider & HRD Corp Claimable (dengan penafian syarat)
-6. **Sumber** — afizulmohammad.com dan motivasipekerja.com
-7. **Soalan lazim** (6 soalan)
-8. **CTA** WhatsApp + e-mel, footer, butang WhatsApp terapung
+3. **Galeri** — 5 gambar & 4 klip video sebenar dari sesi latihan (klik untuk besarkan / main dengan bunyi)
+4. **Pendekatan** — 3 langkah kerja
+5. **Jurulatih** — profil, pengalaman dan kelayakan Afizul Mohammad
+6. **HRD Corp** — Registered Training Provider & HRD Corp Claimable (dengan penafian syarat)
+7. **Sumber** — afizulmohammad.com dan motivasipekerja.com
+8. **Soalan lazim** (6 soalan)
+9. **CTA** WhatsApp + e-mel, footer, butang WhatsApp terapung
 
 ## Struktur fail
 ```
@@ -46,3 +47,8 @@ Jika guna domain sendiri nanti, cari & ganti `https://dynopos.github.io/Powercoa
 - Daftar di Google Search Console dan hantar `sitemap.xml`.
 - Daftar di Bing Webmaster Tools (digunakan oleh ChatGPT/Copilot).
 - Letak URL laman dalam Google Business Profile & semua media sosial.
+
+## Galeri
+- Gambar: `assets/img/sesi-*.webp` (3 saiz: 640, 1280, 1920). Video: `assets/video/sesi-1..4.mp4` + gambar muka `sesi-*.webp`.
+- Video dimainkan senyap secara automatik bila kelihatan; klik untuk tonton dengan bunyi.
+- Tambah gambar baharu: salin satu blok `<figure class="gal__item ...">` dalam `index.html` dan tukar nama fail & kapsyen.
