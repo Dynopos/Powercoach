@@ -65,3 +65,16 @@ Jika domain bertukar, kemas kini `CNAME` dan cari & ganti `https://teambuildingb
 - **Auto-main:** semua pelayar menyekat bunyi sebelum pelawat menyentuh laman — tiada laman boleh memaksa. Lagu akan bermula pada sentuhan/klik **pertama** di mana-mana (skrol tidak dikira). Butang main berdenyut sementara menunggu. Jika pelawat jeda, ia tidak dimainkan semula.
 - Lagu dijeda bila video dengan bunyi dibuka, dan sebaliknya.
 - Tukar lagu: ganti kedua-dua fail (nama sama) dan kemas kini `data-duration`. Untuk ulang tanpa henti, tambah atribut `loop` pada `<audio>`.
+
+## Artikel (SEO)
+Halaman artikel di `artikel/` (senarai: `/artikel/`), juga dipaparkan di laman utama (bahagian **Artikel**) dan dalam `sitemap.xml` & `llms.txt`.
+
+| Kata kunci | Halaman |
+|---|---|
+| team building Kelantan | `/artikel/team-building-kelantan/` |
+| team building berkesan Kelantan | `/artikel/team-building-berkesan-kelantan/` |
+| latihan untuk company dan syarikat | `/artikel/latihan-untuk-company-dan-syarikat/` |
+
+Setiap artikel ada: tajuk & meta description berkata kunci, breadcrumb, isi kandungan, gambar sebenar program, butang WhatsApp, soalan lazim, artikel berkaitan, gambar kongsi (`og.jpg`) dan data berstruktur `BlogPosting` + `FAQPage` + `BreadcrumbList`.
+Mengedit teks: ubah terus `artikel/<slug>/index.html` (jika ubah soalan lazim, ubah juga bahagian `FAQPage` dalam `<head>`).
+Selepas terbit: hantar `sitemap.xml` semula di Google Search Console.
