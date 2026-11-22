@@ -101,6 +101,9 @@
         el.src = it.getAttribute('data-lb-video');
         el.poster = it.getAttribute('data-poster') || '';
         el.controls = true; el.playsInline = true; el.autoplay = true;
+        var song = document.getElementById('vnAudio');
+        if (song && !song.paused) song.pause(); // jangan bertindih dengan lagu
+        var pv = el.play(); if (pv && pv.catch) pv.catch(function () {});
       } else {
         el = document.createElement('img');
         el.src = it.getAttribute('data-lb');
@@ -227,6 +230,60 @@
         else { alb.classList.add('is-all'); more.parentElement.hidden = true; }
       });
     });
+  }
+
+  // Voice note / lagu (gaya WhatsApp) + auto-main pada sentuhan pertama
+  var vn = document.getElementById('vn'), au = document.getElementById('vnAudio');
+  if (vn && au) {
+    var vPlay = document.getElementById('vnPlay'), vTrack = document.getElementById('vnTrack'), vTime = document.getElementById('vnTime');
+    var fmt = function (x) { x = Math.max(0, Math.floor(isFinite(x) ? x : 0)); return Math.floor(x / 60) + ':' + ('0' + (x % 60)).slice(-2); };
+    // Chrome kadang-kadang melaporkan tempoh Opus sebagai Infinity → guna data-duration
+    var dur = function () { return (isFinite(au.duration) && au.duration > 0) ? au.duration : (+au.getAttribute('data-duration') || 0); };
+    var sync = function () {
+      var d = dur(), pc = d ? Math.min(100, au.currentTime / d * 100) : 0;
+      vTrack.style.setProperty('--p', pc + '%');
+      vTrack.setAttribute('aria-valuenow', String(Math.round(pc)));
+      vTime.textContent = fmt(au.paused && !au.currentTime ? d : au.currentTime);
+    };
+    var ready = function () { vn.hidden = false; sync(); };
+    au.addEventListener('loadedmetadata', ready);
+    if (au.readyState >= 1) ready();
+    au.addEventListener('timeupdate', sync);
+    au.addEventListener('play', function () { vn.classList.add('is-playing'); vPlay.setAttribute('aria-label', 'Jeda lagu'); });
+    au.addEventListener('pause', function () { vn.classList.remove('is-playing'); vPlay.setAttribute('aria-label', 'Main lagu'); });
+    au.addEventListener('ended', function () { au.currentTime = 0; sync(); });
+    vPlay.addEventListener('click', function () { if (au.paused) { var q = au.play(); if (q && q.catch) q.catch(function () {}); } else au.pause(); });
+    var seek = function (x) { var r = vTrack.getBoundingClientRect(), d = dur(); if (d) au.currentTime = Math.min(1, Math.max(0, (x - r.left) / r.width)) * d; sync(); };
+    vTrack.addEventListener('click', function (e) { seek(e.clientX); });
+    vTrack.addEventListener('keydown', function (e) {
+      if (!dur()) return;
+      if (e.key === 'ArrowRight') { au.currentTime = Math.min(dur(), au.currentTime + 3); e.preventDefault(); }
+      if (e.key === 'ArrowLeft') { au.currentTime = Math.max(0, au.currentTime - 3); e.preventDefault(); }
+      if (e.key === ' ' || e.key === 'Enter') { vPlay.click(); e.preventDefault(); }
+      sync();
+    });
+    // Video berbunyi (paparan besar) menjeda lagu; video galeri senyap tidak menjejaskan lagu
+    document.addEventListener('play', function (e) {
+      var t = e.target;
+      if (t && t.tagName === 'VIDEO' && !t.muted && !au.paused) au.pause();
+    }, true);
+    au.addEventListener('play', function () {
+      document.querySelectorAll('video').forEach(function (v) { if (!v.muted && !v.paused) v.pause(); });
+    });
+    // Auto-main: pelayar menyekat bunyi sebelum interaksi. Cuba terus; jika disekat, main pada
+    // sentuhan/klik/kekunci PERTAMA (bukan skrol). Sekali sahaja; jeda pelawat dihormati.
+    var started = false, EVTS = ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'];
+    var disarm = function () { EVTS.forEach(function (t) { document.removeEventListener(t, onFirst, true); }); vn.classList.remove('is-waiting'); };
+    au.addEventListener('play', function () { started = true; disarm(); });
+    function onFirst(e) {
+      if (started) return disarm();
+      if (e.type === 'keydown' && e.key === 'Escape') return;
+      if (e.target.closest && e.target.closest('#vn, video, .vid, .lb')) return;
+      var q = au.play(); if (q && q.catch) q.catch(function () {});
+    }
+    var arm = function () { if (started) return; vn.classList.add('is-waiting'); EVTS.forEach(function (t) { document.addEventListener(t, onFirst, true); }); };
+    var first = au.play();
+    if (first && first.catch) first.catch(arm); else if (au.paused) arm();
   }
 
   // Tahun semasa

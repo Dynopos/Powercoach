@@ -59,3 +59,9 @@ Jika domain bertukar, kemas kini `CNAME` dan cari & ganti `https://teambuildingb
 - 5 petak galeri utama menukar gambar secara automatik (pudar lembut), satu petak setiap ~1.8 saat secara bergilir.
 - Berhenti bila tetikus di atas petak, bila tab tidak aktif, atau bila paparan besar dibuka; tidak bergerak jika pelawat pilih "kurangkan animasi".
 - Tukar senarai gambar: dalam `index.html`, setiap `<figure class="gal__item gal--a rot ...">` ada beberapa `<img class="rot__img">` — tambah/buang `<img>` dan titik `<i>` dalam `rot__dots` mengikut bilangan.
+
+## Lagu (voice note dalam hero)
+- Fail: `assets/audio/lagu.ogg` (Opus) + `assets/audio/lagu.m4a` (AAC untuk iPhone/Safari lama). Tempoh 64 saat (`data-duration="64"`).
+- **Auto-main:** semua pelayar menyekat bunyi sebelum pelawat menyentuh laman — tiada laman boleh memaksa. Lagu akan bermula pada sentuhan/klik **pertama** di mana-mana (skrol tidak dikira). Butang main berdenyut sementara menunggu. Jika pelawat jeda, ia tidak dimainkan semula.
+- Lagu dijeda bila video dengan bunyi dibuka, dan sebaliknya.
+- Tukar lagu: ganti kedua-dua fail (nama sama) dan kemas kini `data-duration`. Untuk ulang tanpa henti, tambah atribut `loop` pada `<audio>`.
