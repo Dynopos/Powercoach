@@ -49,6 +49,6 @@ Jika guna domain sendiri nanti, cari & ganti `https://dynopos.github.io/Powercoa
 - Letak URL laman dalam Google Business Profile & semua media sosial.
 
 ## Galeri
-- Gambar: `assets/img/sesi-*.webp` (3 saiz: 640, 1280, 1920). Video: `assets/video/sesi-1..4.mp4` + gambar muka `sesi-*.webp`.
+- Gambar sesi: `assets/img/sesi-*.webp`; gambar jurulatih: `assets/img/jurulatih-1..5-*.webp` (3 saiz: 640, 1280, 1920). Video: `assets/video/sesi-1..4.mp4` + gambar muka `sesi-*.webp`.
 - Video dimainkan senyap secara automatik bila kelihatan; klik untuk tonton dengan bunyi.
 - Tambah gambar baharu: salin satu blok `<figure class="gal__item ...">` dalam `index.html` dan tukar nama fail & kapsyen.
