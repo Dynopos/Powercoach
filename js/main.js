@@ -143,6 +143,65 @@
     });
   }
 
+  // Bento bergilir: setiap petak galeri bertukar gambar, satu petak pada satu masa
+  var rots = Array.prototype.slice.call(document.querySelectorAll('.rot'));
+  if (rots.length && !reduce) {
+    var load = function (img) {
+      if (img.dataset.src) {
+        if (img.dataset.srcset) img.srcset = img.dataset.srcset;
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src'); img.removeAttribute('data-srcset');
+      }
+    };
+    var state = rots.map(function (r) {
+      return { el: r, imgs: r.querySelectorAll('.rot__img'), dots: r.querySelectorAll('.rot__dots i'),
+        btn: r.querySelector('.gal__btn'), cap: r.querySelector('figcaption'), i: 0, seen: false, hover: false };
+    });
+    state.forEach(function (st) {
+      st.el.addEventListener('mouseenter', function () { st.hover = true; });
+      st.el.addEventListener('mouseleave', function () { st.hover = false; });
+      st.el.addEventListener('focusin', function () { st.hover = true; });
+      st.el.addEventListener('focusout', function () { st.hover = false; });
+    });
+    if ('IntersectionObserver' in window) {
+      var ro = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          var st = state[rots.indexOf(e.target)];
+          st.seen = e.isIntersecting;
+          if (e.isIntersecting && st.imgs[1]) load(st.imgs[1]); // pramuat gambar seterusnya
+        });
+      }, { rootMargin: '200px 0px' });
+      rots.forEach(function (r) { ro.observe(r); });
+    }
+    var step = function (st) {
+      var n = st.imgs.length, nx = (st.i + 1) % n, img = st.imgs[nx];
+      load(img);
+      var go = function () {
+        st.imgs[st.i].classList.remove('is-on'); st.imgs[st.i].setAttribute('aria-hidden', 'true');
+        img.classList.add('is-on'); img.removeAttribute('aria-hidden');
+        if (st.dots[st.i]) st.dots[st.i].classList.remove('is-on');
+        if (st.dots[nx]) st.dots[nx].classList.add('is-on');
+        var cap = img.getAttribute('data-cap');
+        st.btn.setAttribute('data-lb', img.getAttribute('data-lb'));
+        st.btn.setAttribute('data-cap', cap);
+        st.btn.setAttribute('aria-label', 'Besarkan gambar: ' + cap);
+        st.cap.classList.add('is-swap');
+        setTimeout(function () { st.cap.textContent = cap; st.cap.classList.remove('is-swap'); }, 400);
+        st.i = nx;
+        load(st.imgs[(nx + 1) % n]);
+      };
+      if (img.complete && img.naturalWidth) go(); else img.addEventListener('load', go, { once: true });
+    };
+    var turn = 0;
+    setInterval(function () {
+      if (document.hidden || (lb && lb.open)) return;
+      for (var k = 0; k < state.length; k++) {
+        var st = state[(turn + k) % state.length];
+        if (st.seen && !st.hover) { step(st); turn = (turn + k + 1) % state.length; return; }
+      }
+    }, 1800);
+  }
+
   // Album: penapis & lihat semua
   var alb = document.getElementById('album');
   var more = document.getElementById('albMore');

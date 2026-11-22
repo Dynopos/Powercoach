@@ -430,3 +430,15 @@ p{margin:0}
 .testi__copy > p{color:#c0bbcc;margin-top:18px}
 @media (min-width:900px){.testi{grid-template-columns:5fr 7fr;gap:56px}}
 @media (max-width:559px){.vid--tall figcaption{display:block}}
+
+/* Bento bergilir: gambar bertukar dalam setiap petak */
+.rot .gal__btn img.rot__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);
+  transition:opacity 1.1s var(--ease),transform 7s linear}
+.rot .gal__btn img.rot__img.is-on{opacity:1;transform:scale(1)}
+.rot:hover .gal__btn img.rot__img.is-on{transform:scale(1.04)}
+.rot figcaption{transition:opacity .4s}
+.rot figcaption.is-swap{opacity:0}
+.rot__dots{position:absolute;z-index:2;top:12px;right:12px;display:flex;gap:4px;padding:5px 7px;border-radius:999px;background:rgba(10,8,18,.45);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);pointer-events:none}
+.rot__dots i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.4);transition:width .4s var(--ease),background .4s}
+.rot__dots i.is-on{width:14px;border-radius:3px;background:#fff}
+@media (prefers-reduced-motion:reduce){.rot .gal__btn img.rot__img{transform:none!important}}

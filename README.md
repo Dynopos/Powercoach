@@ -54,3 +54,8 @@ Jika domain bertukar, kemas kini `CNAME` dan cari & ganti `https://teambuildingb
 - Gambar sesi: `assets/img/sesi-*.webp`; gambar jurulatih: `assets/img/jurulatih-1..5-*.webp` (3 saiz: 640, 1280, 1920). Video: `assets/video/sesi-1..8.mp4` (sesi-6 = testimoni) + gambar muka `sesi-*.webp`.
 - Video dimainkan senyap secara automatik bila kelihatan; klik untuk tonton dengan bunyi.
 - Tambah gambar baharu: salin satu blok `<figure class="gal__item ...">` dalam `index.html` dan tukar nama fail & kapsyen.
+
+## Bento bergilir (gambar bertukar)
+- 5 petak galeri utama menukar gambar secara automatik (pudar lembut), satu petak setiap ~1.8 saat secara bergilir.
+- Berhenti bila tetikus di atas petak, bila tab tidak aktif, atau bila paparan besar dibuka; tidak bergerak jika pelawat pilih "kurangkan animasi".
+- Tukar senarai gambar: dalam `index.html`, setiap `<figure class="gal__item gal--a rot ...">` ada beberapa `<img class="rot__img">` — tambah/buang `<img>` dan titik `<i>` dalam `rot__dots` mengikut bilangan.
